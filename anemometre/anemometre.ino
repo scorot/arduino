@@ -10,7 +10,8 @@ Green wire connected to INPUT_PIN
 According to the technical documentation the anemometer emits 20 pulses per rotation.
 And 1 rotation per second is 1.75 m/s.
 
-As in this sketch we count pulse changes form up to down and up to down 
+As in this sketch we count pulse changes form up to down and up to down, we have to
+count 40 change state per turn.
 */
 
 // anemometer input pin
@@ -37,7 +38,6 @@ void setup() {
     Serial.begin(9600);
  
     Serial.println("Init Success");
-    Serial.println("Wind");
 
     pinLastState = digitalRead(INPUT_PIN);
 }
@@ -67,14 +67,18 @@ void loop() {
       loopTime = loopMillis - currentMillis;
     }
 
+    // windo speed in m/s
     windSpeed =  (counter / 40.) * 1.75;
+    // wind speed in mph
     windSpeedMph = windSpeed * 2.23694;
 
-    // A simple way to compute rolling average over 2 minutes that is n=120 ...
+    // A simple way to compute rolling average over n points ...
     // new_average = (old_average * (n-1) + new_value) / n
+
+    // So we compute the average wind speed over 2 minutes, that is for n=120.
     windSpeed_agv2m = (windSpeed_agv2m * 119. + windSpeed )/ 120.;
 
-    // A simple way to compute rolling average over 2 minutes...
+    // Same for the wind speed in mph.
     windSpeedMph_agv2m = (windSpeedMph_agv2m * 119. + windSpeedMph )/ 120.;
 
     printSerialValues();
@@ -82,6 +86,8 @@ void loop() {
 
 void printSerialValues() {
 
+    // Print values the serial port
+    // the format is similarto json format or python dictionnary for easier usage.
     Serial.print("{ \"wind_speed\" : ");
     Serial.print(windSpeed);
     Serial.print(", \"wind_speed_avg2m\" : ");
