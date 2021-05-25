@@ -59,7 +59,7 @@ void setup() {
     }
 	
     Serial.println("Init Success");
-    Serial.println("Temperature           Pressure             Humidity");
+    Serial.println("Temperature           Pressure             Humidity           Atlitude");
 
     lcd.begin(16, 2);
 
