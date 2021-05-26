@@ -1,18 +1,19 @@
 /*
-Read the pulse from a NPN anemometer.
-I used this one form amazon :
-https://www.amazon.fr/gp/product/B081RMGQRB/ref=ppx_yo_dt_b_asin_title_o07_s02?ie=UTF8&psc=1
-
-Brown wire conncected to +5V
-Black wire connceted to ground
-Green wire connected to INPUT_PIN
-
-According to the technical documentation the anemometer emits 20 pulses per rotation.
-And 1 rotation per second is 1.75 m/s.
-
-As in this sketch we count pulse changes form up to down and up to down, we have to
-count 40 change state per turn.
-*/
+ * Read an count the pulses from a NPN anemometer.
+ * 
+ * I used this one from amazon :
+ * https://www.amazon.fr/gp/product/B081RMGQRB/ref=ppx_yo_dt_b_asin_title_o07_s02?ie=UTF8&psc=1
+ * 
+ * Brown wire conncected to +5V
+ * Black wire connceted to ground
+ * Green wire connected to INPUT_PIN
+ * 
+ * According to the technical documentation the anemometer emits 20 pulses per rotation.
+ * And 1 rotation per second is 1.75 m/s.
+ * 
+ * As in this sketch we count pulse changes form up to down and up to down, we have to
+ * count 40 change state per turn.
+ */
 
 // anemometer input pin
 #define INPUT_PIN 7
@@ -67,7 +68,7 @@ void loop() {
       loopTime = loopMillis - currentMillis;
     }
 
-    // windo speed in m/s
+    // wind speed in m/s
     windSpeed =  (counter / 40.) * 1.75;
     // wind speed in mph
     windSpeedMph = windSpeed * 2.23694;
