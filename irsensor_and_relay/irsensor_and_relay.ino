@@ -9,13 +9,13 @@
  */
 
 // The distance above which set relay to LOW
-#define DISTANCE 50.
+#define DISTANCE 60.
 
 // The Relay pin number
 #define RELAY_PIN 7
 
 
-float distanceAvg = 0.;
+float distanceAvg = 80.;
 
 void setup() {
 
@@ -31,8 +31,15 @@ void loop() {
    
     int sensorValue = analogRead(A0);
     float voltage = sensorValue * (5.0 / 1023.0);
-    //float distance = 24.65251/(voltage-0.1065759);
     float distance = 29.988 * pow(voltage , -1.173);
+
+    if (distance > 100. ) {
+      distance = 100.;
+    }
+
+    if (distance < 10. ) {
+      distance = 10.;
+    }
 
     if (distanceAvg < DISTANCE) {
       digitalWrite(RELAY_PIN, LOW);
@@ -41,6 +48,7 @@ void loop() {
       digitalWrite(RELAY_PIN, HIGH);
     }
 
+    // Compute the average over the last n=5 values with this formula:
     // new_average = (old_average * (n-1) + new_value) / n
     distanceAvg =  (distanceAvg * 4. + distance) / 5.;
     Serial.print("Voltage : ");
@@ -51,8 +59,7 @@ void loop() {
     Serial.print(distanceAvg);
     Serial.println("cm ");
 
-    // wait for 5 seconds so that an object passing quickly in front of the sensor
-    // does not change the relay state.
+    // wait for 1 seconds
     delay(1000);
     
 }
