@@ -1,11 +1,12 @@
 
 /*
  * A simple sketch to control a relay based on the distance measured with
- * An IR sensor. In this case an Sharp GP2Y0A21YK0F (10-80cm range).
+ * an IR sensor. In this case an Sharp GP2Y0A21YK0F (10-80cm range).
  * https://www.amazon.fr/gp/product/B07MY27W7T/ref=ppx_yo_dt_b_asin_title_o07_s00?ie=UTF8&psc=1
  * 
  * The relation between the tension and the distance is given with ZSharpIR :
  * https://github.com/zoubworldArduino/ZSharpIR
+ * 
  */
 
 // The distance above which set relay to LOW
@@ -33,6 +34,7 @@ void loop() {
     float voltage = sensorValue * (5.0 / 1023.0);
     float distance = 29.988 * pow(voltage , -1.173);
 
+    // set bounds...
     if (distance > 100. ) {
       distance = 100.;
     }
@@ -59,7 +61,7 @@ void loop() {
     Serial.print(distanceAvg);
     Serial.println("cm ");
 
-    // wait for 1 seconds
+    // wait for a second
     delay(1000);
     
 }

@@ -88,7 +88,7 @@ void loop() {
 void printSerialValues() {
 
     // Print values the serial port
-    // the format is similarto json format or python dictionnary for easier usage.
+    // the format is similar to json format or python dictionnary for easier usage.
     Serial.print("{ \"wind_speed\" : ");
     Serial.print(windSpeed);
     Serial.print(", \"wind_speed_avg2m\" : ");
